@@ -71,20 +71,12 @@
 
         
         $offset = ($page_num-1) * $limit;
-        if($_SESSION['role']==0){
+       
         $query = "SELECT post.post_id, post.post_title, post.post_date,post.category, 
         category.category_name,users.username FROM post
         LEFT JOIN category ON post.category = category.category_id
         LEFT JOIN users ON post.author = users.id
         ORDER BY post.post_id DESC LIMIT {$offset},{$limit}";
-        }else{
-            $query = "SELECT post.post_id, post.post_title, post.post_date,post.category 
-        category.category_name,users.username FROM post
-        LEFT JOIN category ON post.category = category.category_id
-        LEFT JOIN users ON post.author = users.id
-        WHERE post.author = {$_SESSION['id']}
-        ORDER BY post.post_id DESC LIMIT {$offset},{$limit}";
-        }
         $result = mysqli_query($connection,$query) or die("Can't Query");
         $count = mysqli_num_rows($result);
         if($count > 0){
